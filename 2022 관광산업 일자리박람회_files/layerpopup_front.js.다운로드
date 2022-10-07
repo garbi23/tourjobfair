@@ -1,0 +1,105 @@
+var str_popup_layer_html ="<!-- Popup Layer Start-->" + 
+													"<div id=\"kiwi_layer_container\">" + 
+													"	<div id=\"kiwi_layer_bg\"></div>" + 
+													"	<div id=\"kiwi_layer_popup_window\">" + 
+													"		<a href=\"javascript:;\" id=\"kiwi_layer_close\" title=\"Close\" onclick=\"javascript:kiwi_close();\"></a>" + 
+													"		<iframe id=\"popFrame\" name=\"popFrame\" src=\"about:blank\" marginwidth=\"0\" marginheight=\"0\" frameborder=\"0\" width=\"100%\" height=\"100%\" scrolling=\"no\"></iframe>" + 
+													"	</div>" + 
+													"</div>" + 
+													"<div style=\'display:none\'>" + 
+													"	<img src=\'/_include/layerpopup/images/x.png\' alt=\'\' />" + 
+													"</div>" + 
+													"<!-- Popup Layer End-->"
+
+document.write(str_popup_layer_html);
+
+function kiwi_open(surl, swidth, sheight, modal){
+	jQuery('#kiwi_layer_popup_window').css("width", swidth);
+	jQuery('#kiwi_layer_popup_window').css("height", sheight);
+	document.getElementById('popFrame').src = surl;
+
+	var el = "kiwi_layer_popup_window";
+	
+	jQuery('#kiwi_layer_container').fadeIn();
+	var temp = jQuery('#' + el);
+	if (temp.outerHeight() < jQuery(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+	else temp.css('top', '0px');
+	if (temp.outerWidth() < jQuery(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+	else temp.css('left', '0px');
+		
+	if (modal=="no") {
+		jQuery('#kiwi_layer_bg').css("cursor", "default");
+		jQuery('#kiwi_layer_bg').css("cursor", "default");
+		jQuery('#kiwi_layer_bg').css("opacity", ".3");
+		jQuery('#kiwi_layer_bg').css("filter", "alpha(opacity=30)");
+		
+		jQuery('#kiwi_layer_bg').click(function(){
+			kiwi_close();
+		});
+	} else if (modal=="white") {
+		jQuery('#kiwi_layer_bg').css("cursor", "default");
+		jQuery('#kiwi_layer_bg').css("cursor", "default");
+		jQuery('#kiwi_layer_bg').css("opacity", "0");
+		jQuery('#kiwi_layer_bg').css("filter", "alpha(opacity=0)");
+		jQuery('#kiwi_layer_popup_window').css("padding", "0");
+		jQuery('#kiwi_layer_popup_window').css("border-radius", "0");
+		jQuery('#kiwi_layer_popup_window').css("box-shadow", "5px 5px 10px rgba(0,0,0,.5)");
+		jQuery('#kiwi_layer_popup_window a#kiwi_layer_close').css("top", "-10px");
+		jQuery('#kiwi_layer_popup_window a#kiwi_layer_close').css("right", "-10px");
+		
+		jQuery('#kiwi_layer_bg').click(function(){
+			kiwi_close();
+		});
+	} else if (modal=="black") {
+		jQuery('#kiwi_layer_bg').css("cursor", "default");
+		jQuery('#kiwi_layer_bg').css("cursor", "default");
+		jQuery('#kiwi_layer_bg').css("opacity", "0");
+		jQuery('#kiwi_layer_bg').css("filter", "alpha(opacity=0)");
+		jQuery('#kiwi_layer_popup_window').css("padding", "0");
+		jQuery('#kiwi_layer_popup_window').css("border-radius", "0");
+		jQuery('#kiwi_layer_popup_window').css("background-color", "rgba(0,0,0,0)");
+		jQuery('#kiwi_layer_popup_window').css("box-shadow", "5px 5px 5px rgba(0,0,0,.5)");
+		jQuery('#kiwi_layer_popup_window a#kiwi_layer_close').css("top", "-10px");
+		jQuery('#kiwi_layer_popup_window a#kiwi_layer_close').css("right", "-10px");
+		
+		jQuery('#kiwi_layer_bg').click(function(){
+			kiwi_close();
+		});
+	}
+}
+
+function check_join_info(){
+	var s_url = "/info/popup.check_join_info.php";
+	var s_wdt = "640px";
+	var s_hgt = "260px";
+	kiwi_open(s_url, s_wdt, s_hgt, 'no');
+}
+
+function register_member(){
+	var s_url = "/info/popup.register_member.php";
+	var s_wdt = "700px";
+	var s_hgt = "580px";
+	kiwi_open(s_url, s_wdt, s_hgt, 'yes');
+}
+
+function change_password(){
+	var s_url = "/info/popup.change_password.php";
+	var s_wdt = "480px";
+	var s_hgt = "415px";
+	kiwi_open(s_url, s_wdt, s_hgt, 'no');
+}
+
+function kiwi_close() {
+	jQuery('#kiwi_layer_container').fadeOut();
+	document.getElementById('popFrame').src = "about:blank";
+}
+
+function kiwi_clear() {
+	document.getElementById('popFrame').src = "about:blank";
+}
+
+function kiwi_close_reload() {
+	jQuery('#kiwi_layer_container').fadeOut();
+	document.getElementById('popFrame').src = "about:blank";
+	parent.location.reload();
+}
